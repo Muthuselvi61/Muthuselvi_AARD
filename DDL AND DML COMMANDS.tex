@@ -1,0 +1,118 @@
+DDL:
+1) Create a table named products with the following columns:
+• product_id (INT, primary key)
+• product_name (VARCHAR(100))
+• price (DECIMAL(10,2))
+
+create table products(product_id Int,
+Product_name varchar(100),
+Price decimal(10,2),
+Primary key(product_id));
+
+2) Add a column stock_quantity (INT) to the products table.
+Alter table products
+add column stock_quantity INT;
+
+3) Rename the column price in the products table to product_price.
+
+Alter table products
+rename column price to product_price;
+
+4) Change the datatype of the product_name column to VARCHAR(150) in the products table.
+
+alter table products
+modify column product_name  varchar(150);
+
+5) Remove the column stock_quantity from the products table.
+alter table products
+drop column stock_quantity;
+
+6) Delete the products table from the database.
+drop table products;
+
+7) Truncate the products table to remove all rows but keep the table structure.
+Truncate table products;
+
+8) Create a new table customers with the following columns:
+customer_id (INT, primary key)
+first_name (VARCHAR(50))
+last_name (VARCHAR(50))
+email (VARCHAR(100), must be unique);
+
+create table customers(
+customer_id int,
+first_name varchar(50),
+last_name varchar(50),
+email varchar(100),
+unique(email),
+primary key(customer_id));
+
+9) Create a foreign key fk_customer_id in the orders table that references the customer_id
+column in the customers table.
+
+create table orders(order_id int,
+order_Number int,
+primary key(order_id),
+customer_id int,
+Foreign key(customer_id) references customers(customer_id));
+
+-------------------------------
+DML
+10) Insert a new product into the products table with the following data:
+• product_id: 1
+• product_name: 'Laptop'
+• product_price: 999.99
+
+
+Insert into products(product_id,Product_name,product_price)values(1,'Laptop',999.99);
+
+11) Insert multiple rows into the products table with the following data:
+(2, 'Smartphone', 499.99)
+(3, 'Tablet', 299.99)
+
+Insert into products(product_id,Product_name,product_price)values(2,'Smartphone',499.99),(3,'Tablet',299.99);
+
+12) Update the price of the product with product_id 1 to 1099.99
+
+update products
+set product_price = 1099.99
+where product_id =1;
+
+13) Increase the price of all products by 10%.
+update products
+set product_price = product_price*0.1;
+
+14) Delete the product with product_id =3 3 from the products table.
+
+delete from products
+where product_id =3;
+
+15) Insert a new customer into the customers table with the following data:
+• customer_id: 1
+• first_name: 'John'
+• last_name: 'Doe'
+• email: 'john.doe@example.com'
+
+Insert into customers(customer_id,first_name,last_name,email)values(1,'John','Doe','john.doe@example.com');
+
+16) Insert multiple customers into the customers table:
+(2, 'Jane', 'Smith', 'jane.smith@example.com')
+(3, 'Bob', 'Johnson', 'bob.johnson@example.com')
+
+Insert into customers(customer_id,first_name,last_name,email)values(2,'Jane','Smith','jane.smith@example.com'),
+(3,'Bob','johnson','bob.johnson@example.com');
+
+17) Update the email of the customer with customer_id 2 to new.email@example.com.
+
+update customers
+set email = 'new.email@example.com'
+where customer_id = 2;
+
+18) Delete the customer with customer_id 3 from the customers table.
+
+delete from customers
+where customer_id ='3';
+19) Update the first name of all customers with the last name Smith to Emily.
+update customers
+set first_name = 'Smith',
+last_name = 'Emily'

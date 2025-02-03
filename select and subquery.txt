@@ -1,0 +1,249 @@
+------ Basic select 
+
+1)Write an SQL query to retrieve all customer names and their phone numbers from the
+customers table.
+
+select customer names,phone numbers
+from customers;
+
+2)Write an SQL query to find all orders placed after January 1, 2023, with a total amount
+greater than $100 from the orders table.
+select * from orders
+where order_date >'2023-01-01' and total_amount>100;
+
+3)Write an SQL query to display the product name as Item and the price as Cost from the
+products table.
+
+select product_name as Item,price as Cost from 
+products;
+
+4)Write an SQL query to find all unique payment methods from the payments table.
+
+select distinct payment_method  from payments;
+
+5)Write an SQL query to retrieve customer names and their account balance from the
+customers table and sort the result by balance in descending order.
+
+select customer_name,balance from customers
+order by balance desc;
+
+6)Write an SQL query to find the number of orders placed by each customer from the orders
+table.
+
+select customer_id, count(customer_id) from orders
+group by customer_id;
+
+7)Write an SQL query to find products that have been ordered more than 20 times in total
+from the order_items table.
+select  product_id,sum(quantity) as total
+from OrderItems
+group by product_id
+having total > 20;
+
+8)Write an SQL query to find the total, average, maximum, and minimum order amount from
+the orders table.
+
+select sum(total_amount) as total,avg(total_amount) as avg,
+max(total_amount) as max_amount, min(amount)as min_amount
+from orders
+
+9)Write an SQL query to retrieve the top 3 most expensive products from the products table.
+
+select product_name from products
+order by product_price desc
+limit 3;
+
+10)Write an SQL query to find all customers whose name starts with 'J' in the customers table.
+
+select * FRom  customers where customer_name like 'J%';
+
+11)Write an SQL query to retrieve all orders placed between January 1, 2023, and March 31,
+2023, from the orders table.
+
+select * FRom orders
+where date between '2023-01-01' and '2023-03-31';
+
+12)Write an SQL query to retrieve the 2nd and 3rd highest salaries from the employees table.
+
+select salary  from employees
+order by salary  desc
+limit 2  offset 1;
+
+13)Write an SQL query to retrieve all customers whose email address ends with '@gmail.com'.
+
+select * From customer 
+where email address like  '%@gmail.com';
+
+14)Write an SQL query to find products whose names do not contain the word 'Pro' in the
+products table.
+
+select product_name from products
+where product_name not like '%pro%';
+
+15)Write an SQL query to display the email addresses of all employees in lowercase letters.
+
+select lower(email) as email_address from employees
+
+16)Write an SQL query to find all products with a price greater than $50 and a stock quantity
+less than 100.
+select * from  products
+where price >50 and stock_quantity<100;
+
+17)Write an SQL query to retrieve all orders where the total amount is less than $100 or the
+order was placed before January 1, 2023.
+
+select * from orders
+where total_amount <100 or order_date<2023-01-01;
+
+18) Write an SQL query to find all employees who have not been assigned a bonus (i.e., bonus is
+NULL).
+
+select * FRom employees
+where bonus is null;
+
+19)Write an SQL query to find all employees who have been assigned a bonus.
+
+
+select * FRom employees
+where bonus is not null;
+
+20)
+
+
+21)Write an SQL query to round the price of each product to the nearest whole number.
+
+select product_name,round(product_price,0) as price from products;
+
+22)Write an SQL query to find the total sales amount for sales
+ made in 2023.
+
+select sum(sale_amount)as sale_Amount from sales
+where year(sale_date) = '2023'
+
+23)Write an SQL query to calculate the average salary of employees from the employees table.
+
+select avg(salary) from employees
+
+24) Write an SQL query to find the most expensive product from the products
+ table.
+
+select product_name from products
+where price = (Select max(price) from products);
+
+25)Write an SQL query to find the least expensive product from the products table.
+select product_name from products
+where price = (Select min(price) from products);
+
+26)Write an SQL query to remove any leading and trailing spaces from the phone_number
+column.
+
+select trim(phone_number) from employees;
+
+27)Write an SQL query to count how many products have a price greater than $100.
+
+select  count(*) AS count
+from products
+where product_price > 100;
+
+28)Write an SQL query to find the length of each customer's name.
+
+select customer_name,length(customer_name) as len from customers
+
+29)Write an SQL query to find if the salary of each employee is an even or odd number using
+the MOD function.
+
+select salary,case when mod(salary,2)=0 then 'even'
+else 'odd' end as salary_type
+from employee
+
+
+30)Write an SQL query to display all employee names and their positions in uppercase.
+
+select upper(employee names) as name ,upper(positions) as positions from 
+employee
+
+-------------------------------- subquery---------------------------------
+
+1)Write an SQL query to find the names of employees whose salary is
+greater than the average salary of all employees.
+
+select  employee_name from employee
+where salary >(select avg(salary) from employee);
+
+2)Write an SQL query to find the orders with a total amount greater
+than the total amount of orders placed by the same customer.
+
+select  o1.order_id, o1.total_amount
+from orders o1
+where o1.total_amount > (
+    select  o2.total_amount
+    from orders o2
+    where o2.customer_id = o1.customer_id
+	    and o2.order_id != o1.order_id
+);
+
+3)Write an SQL query to find the average price of products that have
+a price greater than 50.
+select  product_name,AVG(product_price) FROM 
+products
+where product_price IN (SELECT product_price FROM products
+where product_price>50)
+group by product_name;
+
+4)Write an SQL query to find the customers who have placed more
+than 3 orders.
+
+select distinct  customer_id from ORDERS
+where customer_id in (select customer_id from orders
+group by customer_id 
+having count(customer_id)>3);
+
+5)Write an SQL query to find the products that have a price lower
+than the minimum price of any product in the electronics category.
+
+select product_id from
+products
+where product_price<(select min(product_price) from products);
+
+6)Write an SQL query to find products that have sold more than the
+average quantity sold.
+
+select product_id,sum(quantity) as sold from sales
+group by product_id
+having sold>(select avg(quantity) from sales);
+
+7)Write an SQL query to find each student's name along with the
+average grade of all students.
+select student_name,(select avg(grade) from students) as avg_grade from students;
+
+
+8)Write an SQL query to find the products in the category with the
+highest average price.
+
+SELECT product_name, category, price
+FROM Products1
+WHERE category = (
+    SELECT category
+    FROM Products1
+    GROUP BY category
+    ORDER BY AVG(price) DESC
+    LIMIT 1
+)
+order by price desc
+LIMIT 1;
+
+
+9)Write an SQL query to find the products that were ordered by
+customers from a specific city (e.g., 'New York').
+select product_id from Orders1 o1
+join 
+(
+select customer_id from Orders1 where city = 'New York')cust1
+on o1.customer_id=cust1.customer_id
+
+
+10)Write an SQL query to increase the price of all products in the
+'Furniture' category by 10%.
+update products
+set price = price*0.1
+where category in (Select category from  products where category = 'Furniture')
